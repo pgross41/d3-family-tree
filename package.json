@@ -4,8 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "watch": "webpack --watch",
-    "dev": "webpack-dev-server --open"
+    "watch": "webpack --mode=development --watch",
+    "dev": "webpack-dev-server --mode=development --open",
+    "build": "webpack --mode=production"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +15,8 @@
     "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.7.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
   }
 }
