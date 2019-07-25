@@ -1,6 +1,52 @@
 body {
-    background-color: #fdfdfd;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
     color: #111111;
-    font-family: sans-serif;
-    font-size: 14px;
+	margin: 0 auto 50px auto;
+	font-size: 14px;
+}
+
+path, line {
+	stroke: #777;
+}
+
+#tree {
+	width: 90%;
+	height: 600px;
+    font-family: helvetica, sans-serif;
+    position: relative;
+    background-image: url(/images/tree.png);
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    border: 1px solid #eee;
+    margin: auto;
+}
+
+#tree .node {
+    position: absolute;
+    width: 200px;
+}
+
+#tree .center {
+    position: relative;
+    margin: auto;
+    width: 200px;
+    height: 100%;
+}
+
+#tree .center #root{
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+}
+
+#tree .member {
+    float: left;
+    text-align: right;
+}
+
+#tree .spouse {
+    float: right;
+    text-align: left;
 }

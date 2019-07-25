@@ -1,14 +1,13 @@
-import * as csv from './csv.js';
-// import {data} from '../data.js';
+import csvData from '../data.js';
+import parse from './parse.js';
+import tree from './tree.js';
 
-function component() {
+const familyData = parse(csvData);
+const container = document.getElementById('tree');
+tree.draw(container, familyData);
 
-  const pre = document.createElement('pre');
-  const fam = csv.parse("");
-  console.log(fam);
-  pre.innerHTML = JSON.stringify(fam, null, 2);
-  return pre;
-
-}
-
-document.body.appendChild(component());
+// Testing
+console.log(familyData);
+const pre = document.createElement('pre');
+pre.innerHTML = JSON.stringify(familyData, null, 2);
+// document.body.appendChild(pre);
