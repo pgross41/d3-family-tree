@@ -4,7 +4,7 @@ import Tree from './tree.js';
 
 const familyData = parse(csvData);
 const tree = new Tree(familyData);
-document.getElementById('tree').appendChild(tree.render());
+document.body.appendChild(tree.render());
 
 // Testing
 console.log(familyData);
