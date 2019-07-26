@@ -1,10 +1,10 @@
 import csvData from '../data.js';
 import parse from './parse.js';
-import tree from './tree.js';
+import Tree from './tree.js';
 
 const familyData = parse(csvData);
-const container = document.getElementById('tree');
-tree.draw(container, familyData);
+const tree = new Tree(familyData);
+document.getElementById('tree').appendChild(tree.render());
 
 // Testing
 console.log(familyData);

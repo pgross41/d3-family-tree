@@ -1,62 +1,33 @@
-var nodeId = 0;
+import RootNode from './root-node';
+import TreeNode from './tree-node';
 
-function draw(container, familyData) {
+class Tree {
 
-	const rootNode = getRootNode(familyData.family);
-	container.appendChild(rootNode);
+	constructor(familyData) {
+		this.el = document.createElement('div');
+		this.family = familyData.family;
+		this.metadata = familyData.metadata;
+	}
 
-	const nodes = getNodes(familyData.family.children);
-	container.appendChild(nodes);
+	render() {
+		const rootNode = new RootNode(this.family);
+		this.el.appendChild(rootNode.render());
+		const nodes = this.getNodes(this.family.children);
+		this.el.appendChild(nodes);
+		return this.el;
+	}
+
+	getNodes(children) {
+		const nodesWrapper = document.createElement('div')
+		const appendChildren = (children) => children.forEach(child => {
+			const node = new TreeNode(child);
+			nodesWrapper.appendChild(node.render())
+			appendChildren(child.children);
+		});
+		appendChildren(children);
+		return nodesWrapper
+	}
+
 }
 
-function getRootNode(data) {
-	const root = document.createElement('div')
-	root.id = 'root';
-	root.innerHTML = getNodeHtml(data);
-
-	const rootWrapper = document.createElement('div')
-	rootWrapper.className = 'center';
-	rootWrapper.appendChild(root);
-	return rootWrapper
-}
-
-function getNodes(children) {
-	const nodesWrapper = document.createElement('div')
-	const appendChildren = (children) => children.forEach(child => {
-		nodesWrapper.appendChild(getNode(child))
-		appendChildren(child.children);
-	});
-	appendChildren(children);
-	return nodesWrapper
-}
-
-function getNode(data) {
-	const node = document.createElement('div')
-	node.id = `node-${++nodeId}`;
-	node.className = 'node';
-	node.innerHTML = getNodeHtml(data);
-	node.style.top = nodeId * 50 + 'px';
-	return node
-}
-
-function getNodeHtml(data) {
-	const name = data.name || '';
-	const date = data.born + (data.died ? ` - ${data.died}` : '');
-	const spouseName = data.spouseName || '';
-	const spouseBirthday = data.spouseBirthday || '';
-	return `
-		<div class="member">
-			<div class="name">${name}</div> 
-			<div class="date">${date}</div>
-		</div>
-		<div class="spouse">
-			<div class="spouseName">${spouseName}</div>
-			<div class="spouseBirthday">${spouseBirthday}</div>
-		</div>
-		&nbsp;(${data.depth})
-	`.trim();
-}
-
-export default {
-	draw: draw
-}
+export default Tree;

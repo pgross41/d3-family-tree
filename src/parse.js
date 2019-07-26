@@ -23,7 +23,7 @@ export default function (csvString) {
         .each(row => row._included = true)
         .value()
     const root = _.find(data, row => _.isEmpty(row.parentName));
-    const family = _.extend(root, { children: getChildren(root) });
+    const family = _.extend(root, { children: getChildren(root), depth: 0 });
 
     // Check for orphans, likely due to misspelled name or parentName
     _.chain(data)
