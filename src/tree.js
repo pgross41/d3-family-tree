@@ -1,6 +1,5 @@
 import RootNode from './root-node';
 import TreeNode from './tree-node';
-import NodeStyle from './node-style';
 
 class Tree {
 
@@ -20,7 +19,6 @@ class Tree {
 	getNodes() {
 		const rootNode = new RootNode(this.family);
 		const children = this.family.children;
-		const nodeStyle = new NodeStyle(this.metadata);
 
 		// Single div to return 
 		const nodesWrapper = document.createElement('div')
@@ -31,9 +29,8 @@ class Tree {
 		const appendChildren = (children) => {
 			const siblingWrapper = document.createElement('div');
 			children.forEach(child => {
-				const node = new TreeNode(child);
-				const style = nodeStyle.calculate(child)
-				const nodeEl = node.render(style);
+				const node = new TreeNode(child, this.metadata);
+				const nodeEl = node.render();
 				siblingWrapper.appendChild(nodeEl)
 				nodesWrapper.appendChild(siblingWrapper)
 				appendChildren(child.children);

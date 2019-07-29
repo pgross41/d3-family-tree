@@ -54,3 +54,11 @@ path, line {
 #tree .depth2 .spouse{
     display: inline-block;
 }
+
+#tree .treeNode.right:last-child {
+    border-bottom: 1px solid #aaa;
+}
+
+#tree .treeNode.left:last-child {
+    border-top: 1px solid #aaa;
+}
