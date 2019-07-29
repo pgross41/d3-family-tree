@@ -1,14 +1,14 @@
 let nodeId = 0;
 
 class TreeNode {
-	
+
 	constructor(familyMember) {
 		this.el = document.createElement('div');
 		this.familyMember = familyMember;
 	}
 
 	render(style) {
-		this.el.id = `node-${++nodeId}`;
+		this.el.id = `node${++nodeId}`;
 		this.el.className = 'treeNode';
 		this.el.innerHTML = this.getNodeHtml(this.familyMember);
 		this.el.style.top = nodeId * 50 + 'px';
@@ -24,12 +24,12 @@ class TreeNode {
 		return `
 			<div class="member">
 				<div class="name">${name}</div> 
-				<div class="date">${date}</div>
+				${date && `<div class="date">${date}</div>`}
 			</div>
-			<div class="spouse">
+			${spouseName && `<div class="spouse">
 				<div class="spouseName">${spouseName}</div>
-				<div class="spouseBirthday">${spouseBirthday}</div>
-			</div>
+				${spouseBirthday && `<div class="spouseBirthday">${spouseBirthday}</div>`}
+			</div>`}
 		`.trim();
 	}
 }

@@ -25,28 +25,5 @@ path, line {
 #tree .treeNode {
     position: absolute;
     width: 200px;
-}
-
-#tree .center {
-    position: relative;
-    margin: auto;
-    width: 200px;
-    height: 100%;
-}
-
-#tree .center .rootNode{
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-}
-
-#tree .member {
-    float: left;
-    text-align: right;
-}
-
-#tree .spouse {
-    float: right;
-    text-align: left;
+    text-align: center;
 }

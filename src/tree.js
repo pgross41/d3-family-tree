@@ -14,7 +14,7 @@ class Tree {
 		const rootNode = new RootNode(this.family);
 		const nodes = this.getNodes(this.family.children);
 		this.el.id = 'tree';
-		this.el.appendChild(rootNode.render());
+		nodes.insertBefore(rootNode.render(),nodes.firstChild);
 		this.el.appendChild(nodes);
 		return this.el;
 	}

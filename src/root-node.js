@@ -3,11 +3,8 @@ import TreeNode from './tree-node';
 class RootNode extends TreeNode {
 
 	render() {
-		const innerEl = document.createElement('div')
-		innerEl.className = 'rootNode';
-		innerEl.innerHTML = this.getNodeHtml(this.familyMember);
-		this.el.className = 'center';
-		this.el.appendChild(innerEl);
+		this.el.className = 'treeNode rootNode';
+		this.el.innerHTML = this.getNodeHtml(this.familyMember);
 		return this.el
 	}
 }
