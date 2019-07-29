@@ -11,25 +11,31 @@ class Tree {
 	}
 
 	render() {
-		const rootNode = new RootNode(this.family);
-		const nodes = this.getNodes(this.family.children);
+		const nodes = this.getNodes();
 		this.el.id = 'tree';
-		nodes.insertBefore(rootNode.render(),nodes.firstChild);
 		this.el.appendChild(nodes);
 		return this.el;
 	}
 
-	getNodes(children) {
+	getNodes() {
+		const rootNode = new RootNode(this.family);
+		const children = this.family.children;
 		const nodeStyle = new NodeStyle(this.metadata);
+
+		// Single div to return 
 		const nodesWrapper = document.createElement('div')
+		nodesWrapper.className = 'treeNodes';
+		nodesWrapper.appendChild(rootNode.render())
+
+		// Traverse the tree 
 		const appendChildren = (children) => {
-			const familyNode = document.createElement('div');
+			const siblingWrapper = document.createElement('div');
 			children.forEach(child => {
 				const node = new TreeNode(child);
 				const style = nodeStyle.calculate(child)
 				const nodeEl = node.render(style);
-				familyNode.appendChild(nodeEl)
-				nodesWrapper.appendChild(familyNode)
+				siblingWrapper.appendChild(nodeEl)
+				nodesWrapper.appendChild(siblingWrapper)
 				appendChildren(child.children);
 			});
 		}

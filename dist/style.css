@@ -10,20 +10,47 @@ path, line {
 }
 
 #tree {
-	width: 90%;
-	height: 600px;
+	width: 100%;
+	height: 800px;
     font-family: helvetica, sans-serif;
     position: relative;
     background-image: url(/images/tree.png);
     background-size: 200px;
     background-repeat: no-repeat;
     background-position: center bottom;
-    border: 1px solid #eee;
+    /* border: 1px solid #eee; */
     margin: auto;
+}
+
+#tree .rootNode {
+    left: 50%;
+    bottom: -100px;
+    width: 360px;;
+}
+
+#tree .rootNode .member {
+    float: left;
+}
+
+#tree .rootNode .spouse {
+    float: right;
+}
+
+#tree .treeNodes {
+    position: absolute;
+    top:0;
+    bottom: 100px;
+    width: 100%;
 }
 
 #tree .treeNode {
     position: absolute;
     width: 200px;
+    margin-left: -100px;
     text-align: center;
+}
+
+#tree .depth2 .member,
+#tree .depth2 .spouse{
+    display: inline-block;
 }

@@ -9,7 +9,7 @@ class TreeNode {
 
 	render(style) {
 		this.el.id = `node${++nodeId}`;
-		this.el.className = 'treeNode';
+		this.el.className = `treeNode depth${this.familyMember.depth}`;
 		this.el.innerHTML = this.getNodeHtml(this.familyMember);
 		this.el.style.top = nodeId * 50 + 'px';
 		Object.assign(this.el.style, style);

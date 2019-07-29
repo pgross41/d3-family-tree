@@ -23,18 +23,16 @@ class NodeStyle {
 
 	calculate(familyMember) {
 		const depth = familyMember.depth
-		// const r = 100 / this.maxDepth; // For percentages 
-		const r = depth * 200;
+		const r = ((100 / this.maxDepth) * familyMember.depth);
 		const sliceTheta = this.getSliceTheta(depth);
 		const sliceNum = this.getGenerationId(depth);
 		const theta = Math.PI + sliceTheta * sliceNum;
-		const x = (r * Math.cos(theta)) + 700;
-		const y = (r * Math.sin(theta)) + 600;
+		const x = (r * Math.cos(theta)) / 2 + 50; // Half because it goes left AND right
+		const y = (r * Math.sin(theta)) + 100; // Not half because it only goes up
 		const rotation = theta + (theta > (Math.PI + (Math.PI / 2)) ? 0 : Math.PI);
-		console.log(theta);
 		return {
-			left: `${x}px`,
-			top: `${y}px`,
+			left: `${x}%`,
+			top: `${y}%`,
 			theta: theta,
 			transform: `rotate(${rotation}rad)`
 		}
