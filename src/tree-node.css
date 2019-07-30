@@ -1,0 +1,34 @@
+.rootNode {
+    left: 50%;
+    bottom: -100px;
+    width: 360px;;
+}
+
+.rootNode .member {
+    float: left;
+}
+
+.rootNode .spouse {
+    float: right;
+}
+
+.treeNode {
+    position: absolute;
+    width: 200px;
+    margin-left: -100px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.depth2 .member,
+.depth2 .spouse{
+    display: inline-block;
+}
+
+.treeNode.right:last-child {
+    border-bottom: 1px solid #aaa;
+}
+
+.treeNode.left:last-child {
+    border-top: 1px solid #aaa;
+}

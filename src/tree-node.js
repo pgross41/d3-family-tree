@@ -1,3 +1,4 @@
+import styles from './tree-node.css';
 class TreeNode {
 
 	constructor(familyMember, metadata) {
@@ -10,7 +11,8 @@ class TreeNode {
 		this.el.id = `node${this.familyMember.nodeId}`;
 		const calculations = this.calculate();
 		this.familyMember.calculations = calculations;
-		this.el.className = `treeNode depth${this.familyMember.depth} ${calculations.half}`;
+		const depthClass = styles[`depth${this.familyMember.depth}`] || '';
+		this.el.className = `${styles.treeNode} ${calculations.half} ${depthClass} `;
 		this.el.innerHTML = this.getNodeHtml(this.familyMember);
 		Object.assign(this.el.style, calculations.style);
 		return this.el;
@@ -22,13 +24,13 @@ class TreeNode {
 		const spouseName = data.spouseName || '';
 		const spouseBirthday = data.spouseBirthday || '';
 		return `
-			<div class="member">
-				<div class="name">${name}</div> 
-				${date && `<div class="date">${date}</div>`}
+			<div class="${styles.member}">
+				<div class="${styles.name}">${name}</div> 
+				${date && `<div class="${styles.date}">${date}</div>`}
 			</div>
-			${spouseName && `<div class="spouse">
-				<div class="spouseName">${spouseName}</div>
-				${spouseBirthday && `<div class="spouseBirthday">${spouseBirthday}</div>`}
+			${spouseName && `<div class="${styles.spouse}">
+				<div class="${styles.spouseName}">${spouseName}</div>
+				${spouseBirthday && `<div class="${styles.spouseBirthday}">${spouseBirthday}</div>`}
 			</div>`}
 		`.trim();
 	}
@@ -56,7 +58,7 @@ class TreeNode {
 		const isRightHalf = theta > (Math.PI + (Math.PI / 2));
 		const rotation = theta + (isRightHalf ? 0 : Math.PI);
 		return {
-			half: isRightHalf ? 'right' : 'left',
+			half: isRightHalf ? styles.right : styles.left,
 			singleNodeTheta: singleNodeTheta,
 			theta: theta,
 			style: {

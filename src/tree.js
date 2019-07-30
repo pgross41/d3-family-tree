@@ -1,9 +1,11 @@
+import styles from './tree.css';
 import RootNode from './root-node';
 import TreeNode from './tree-node';
 
 class Tree {
 
 	constructor(familyData) {
+		console.log(styles);
 		this.el = document.createElement('div');
 		this.family = familyData.family;
 		this.metadata = familyData.metadata;
@@ -11,7 +13,7 @@ class Tree {
 
 	render() {
 		const nodes = this.getNodes();
-		this.el.id = 'tree';
+		this.el.className = styles.tree;
 		this.el.appendChild(nodes);
 		return this.el;
 	}
@@ -22,7 +24,7 @@ class Tree {
 
 		// Single div to return 
 		const nodesWrapper = document.createElement('div')
-		nodesWrapper.className = 'treeNodes';
+		nodesWrapper.className = styles.treeNodes;
 		nodesWrapper.appendChild(rootNode.render())
 
 		// Traverse the tree 
