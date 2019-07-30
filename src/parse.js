@@ -19,7 +19,7 @@ export default function (csvString) {
     // Create relationships
     const getChildren = (parent) => _.chain(data)
         .filter(row => parent.name == row.parentName)
-        .map(child => _.extend(child, { children: getChildren(child) }))
+        .map(child => _.extend(child, { parent: parent, children: getChildren(child) }))
         .each(row => row._included = true)
         .value()
     const root = _.find(data, row => _.isEmpty(row.parentName));
@@ -31,14 +31,23 @@ export default function (csvString) {
         .each(badRow => console.error(`${badRow.name} is not included! parentName: ${badRow.parentName}`))
         .value();
 
-    // Calculate metadata (and remove the temp _included field)
+    // Calculate metadata, nodeIDs, and remove the temp _included field
+    let nodeId = 0;
     const metadata = { depthCounts: [1] }
+    const prevSiblings = []; // This does not require same parent 
     const handleChildren = (children, depth = 0) => {
         depth++;
+        let childId = 0;
         _.each(children, (child) => {
             delete child._included;
-            metadata.depthCounts[depth] = metadata.depthCounts[depth] + 1 || 1;
+            const generationId = metadata.depthCounts[depth] + 1 || 1;
+            metadata.depthCounts[depth] = generationId;
+            child.generationId = generationId;
+            child.childId = ++childId;
             child.depth = depth;
+            child.nodeId = ++nodeId;
+            child.prevSibling = prevSiblings[depth];
+            prevSiblings[depth] = child;
             handleChildren(child.children, depth);
         })
     };

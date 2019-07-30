@@ -8,6 +8,3 @@ document.body.appendChild(tree.render());
 
 // Testing
 console.log(familyData);
-const pre = document.createElement('pre');
-pre.innerHTML = JSON.stringify(familyData, null, 2);
-// document.body.appendChild(pre);

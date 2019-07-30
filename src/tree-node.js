@@ -1,11 +1,3 @@
-// The node is aware of other nodes 
-let nodeId = 0;
-const generationIds = [1];
-const getGenerationId = (depth) => {
-	generationIds[depth] = generationIds[depth] + 1 || 0;
-	return generationIds[depth];
-}
-
 class TreeNode {
 
 	constructor(familyMember, metadata) {
@@ -15,8 +7,9 @@ class TreeNode {
 	}
 
 	render() {
-		this.el.id = `node${++nodeId}`;
+		this.el.id = `node${this.familyMember.nodeId}`;
 		const calculations = this.calculate();
+		this.familyMember.calculations = calculations;
 		this.el.className = `treeNode depth${this.familyMember.depth} ${calculations.half}`;
 		this.el.innerHTML = this.getNodeHtml(this.familyMember);
 		Object.assign(this.el.style, calculations.style);
@@ -44,20 +37,28 @@ class TreeNode {
 	 * Calculate info about this node relative to the others
 	 */
 	calculate() {
-		const maxTheta = Math.PI; 
-		const depth = this.familyMember.depth
+		const minThetaBetweenSibs = Math.PI / 30; // Configurable?
+		const bonusParentTheta = 2.5; // Configurable?
+		const parentCalc = this.familyMember.parent.calculations;
+		const parentSibCount = this.familyMember.parent.parent && this.familyMember.parent.parent.children.length;
+		const maxTheta = parentCalc ? parentCalc.singleNodeTheta * parentSibCount : Math.PI;
+		const depth = this.familyMember.depth;
 		const maxDepth = this.metadata.depthCounts.length;
-		const r = ((100 / maxDepth) * this.familyMember.depth);
-		const sliceTheta = maxTheta / this.metadata.depthCounts[depth]
-		const sliceNum = getGenerationId(depth);
-		const theta = Math.PI + (Math.PI - maxTheta) / 2 + sliceTheta * (sliceNum + 0.5); 
+		const r = (100 / maxDepth) * this.familyMember.depth;
+		const singleNodeTheta = maxTheta / this.metadata.depthCounts[depth];
+		const childId = this.familyMember.childId;
+		const thetaStart = parentCalc ? parentCalc.theta : Math.PI + (Math.PI - maxTheta) / 2;
+		const theta0 = thetaStart + singleNodeTheta * (childId - (parentCalc ? bonusParentTheta : 0.5));
+		const prevSiblingTheta = this.familyMember.prevSibling && this.familyMember.prevSibling.calculations.theta || 0;
+		const theta = Math.max(prevSiblingTheta + minThetaBetweenSibs, theta0);
 		const x = (r * Math.cos(theta)) / 2 + 50; // Half because it goes left AND right
 		const y = (r * Math.sin(theta)) + 100; // Not half because it only goes up
 		const isRightHalf = theta > (Math.PI + (Math.PI / 2));
 		const rotation = theta + (isRightHalf ? 0 : Math.PI);
 		return {
-			sliceNum: sliceNum,
 			half: isRightHalf ? 'right' : 'left',
+			singleNodeTheta: singleNodeTheta,
+			theta: theta,
 			style: {
 				left: `${x}%`,
 				top: `${y}%`,

@@ -48,6 +48,7 @@ path, line {
     width: 200px;
     margin-left: -100px;
     text-align: center;
+    white-space: nowrap;
 }
 
 #tree .depth2 .member,
