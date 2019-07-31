@@ -11,7 +11,7 @@ export default {
 }
 
 export const data = `
-name,born,died,spouseName,spouseBirthday,parentName
+name,born,died,spouseName,spouseBorn,parentName
 Abe Smith,19-Jan-1937,,Amber Smith,25-Mar-1954,
 Bobby Smith,9-Apr-1961,,Barb Smith,24-Jun-1987,Abe Smith
 Betty Johnson,9-Apr-1961,,Bob Johnson,24-Jun-1987,Abe Smith

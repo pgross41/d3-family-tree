@@ -5,16 +5,12 @@
  */
 
 const _ = require('lodash');
+import Papa from 'papaparse';
 
 export default function (csvString) {
 
     // Read CSV
-    const rows = csvString.split('\n');
-    const headers = rows.shift().split(',');
-    const data = _.map(rows, row => {
-        const rowArray = row.split(',');
-        return _.keyBy(rowArray, col => headers[rowArray.indexOf(col)])
-    });
+    const data = Papa.parse(csvString, {header: true}).data;
 
     // Create relationships
     const getChildren = (parent) => _.chain(data)

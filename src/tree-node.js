@@ -14,7 +14,8 @@ class TreeNode {
 		const calculations = this.calculate();
 		this.familyMember.calculations = calculations;
 		const depthClass = styles[`depth${this.familyMember.depth}`] || '';
-		this.el.className = `${styles.treeNode} ${calculations.half} ${depthClass} `;
+		const varietyClass = styles[`variety${this.familyMember.generationId % 3 + 1}`] || '';
+		this.el.className = `${styles.treeNode} ${calculations.half} ${depthClass} ${varietyClass} `;
 		this.el.innerHTML = this.getNodeHtml(this.familyMember);
 		Object.assign(this.el.style, calculations.style);
 		return this.el;
@@ -24,7 +25,7 @@ class TreeNode {
 		const name = data.name || '';
 		const date = data.born + (data.died ? ` - ${data.died}` : '');
 		const spouseName = data.spouseName || '';
-		const spouseBirthday = data.spouseBirthday || '';
+		const spouseBorn = data.spouseBorn || '';
 		return `
 			<div>
 				<div class="${styles.member}">
@@ -32,8 +33,8 @@ class TreeNode {
 					${date && `<div class="${styles.date}">${date}</div>`}
 				</div>
 				${spouseName && `<div class="${styles.spouse}">
-					<div class="${styles.spouseName}">${spouseName}</div>
-					${spouseBirthday && `<div class="${styles.spouseBirthday}">${spouseBirthday}</div>`}
+					<div class="${styles.name}">${spouseName}</div>
+					${spouseBorn && `<div class="${styles.date}">${spouseBorn}</div>`}
 				</div>
 			</div>`}
 		`.trim();
