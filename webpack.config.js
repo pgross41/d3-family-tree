@@ -31,8 +31,12 @@ module.exports = (env, argv) => {
                                 localIdentName: production ? '[hash:base64:5]' : '[path][name]_[local]',
                                 context: path.resolve(__dirname, 'src')
                             },
-                        }
+                        },
                     ]
+                },
+                {
+                    test: /\.(png|jpg)$/,
+                    loader: 'url-loader'
                 },
             ]
         },

@@ -18,6 +18,7 @@
     margin-left: -100px;
     text-align: center;
     white-space: nowrap;
+    height: 50px;
 }
 
 .depth2 .member,
@@ -25,10 +26,18 @@
     display: inline-block;
 }
 
-.treeNode.right:last-child {
-    border-bottom: 1px solid #aaa;
+.treeNode { 
+    /* border: 1px dashed #888; */
+    padding-top: 10px;
 }
 
-.treeNode.left:last-child {
-    border-top: 1px solid #aaa;
+.treeNode:first-child {
+    border-top: 35px solid transparent;
+    border-image: url(../images/branch1.png);
+    border-image-slice: 91;
+    border-image-repeat: stretch;
+}
+
+.left > div{
+    transform: rotate(180deg);
 }
