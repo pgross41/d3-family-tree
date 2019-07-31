@@ -19,3 +19,12 @@
     bottom: 100px;
     width: 100%;
 }
+
+.leafImgs{
+}
+
+.leafImg {
+    width: 250px;
+    margin-left: -125px;
+    position: absolute; 
+}
