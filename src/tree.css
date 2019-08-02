@@ -5,11 +5,10 @@
     left: 0;
     position: absolute;
     font-family: helvetica, sans-serif;
-    background-image: url(/images/tree.png);
-    background-size: 200px;
+    background-image: url(/images/tree2.png);
+    background-size: 275px;
     background-repeat: no-repeat;
-    background-position: center bottom;
-    /* border: 1px solid #eee; */
+    background-position: center 75%;
     margin: auto;
 }
 
@@ -18,9 +17,6 @@
     top:0;
     bottom: 100px;
     width: 100%;
-}
-
-.leafImgs{
 }
 
 .leafImg {

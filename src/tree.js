@@ -2,6 +2,7 @@ import config from '../config.js';
 import styles from './tree.css';
 import RootNode from './root-node';
 import TreeNode from './tree-node';
+import LeafImg from './leaf-img';
 
 class Tree {
 
@@ -47,30 +48,40 @@ class Tree {
 	}
 
 
-	// Decorative leaves
+	// Tree-level leaves (does not divide nodes) 
+	// Node leaves are added via CSS 
 	getLeafImages() {
 		const imgWrapper = document.createElement('div')
 		imgWrapper.className = styles.leafImgs
 		Object.keys(this.metadata.depthCounts).forEach((depth) => {
-			const leavesInRow = Math.round(depth * 6);
-			// const leavesInRow = 10;
-			console.log(leavesInRow);
+			console.log(this.metadata);
+			// The lines between each depth 
+			const leavesInRow = Math.round(depth * 9);
+			// const thetaStart = this.metadata.depthMinThetas[depth];
+			const thetaStart = Math.min(...this.metadata.depthMinThetas.slice(1));
+			// const thetaEnd = Math.PI * 2 + (Math.PI - thetaStart);
+			const thetaEnd = Math.PI * 2 + (Math.PI - Math.min(...this.metadata.depthMinThetas.slice(1)));
 			[...Array(leavesInRow)].forEach((_, idx) => {
-				const img = document.createElement('img')
-				img.className = styles.leafImg;
-				img.src = `/images/leaves${idx % 3 + 1}.png`;
-				const thetaStart = Math.PI + (Math.PI - config.maxAngle) / 2;
-				const theta = thetaStart + (config.maxAngle / leavesInRow) * (idx + 0.5) ;
-				const r = ((100 / this.metadata.depthCounts.length) * depth) + 9;
-				console.log(r);
-				const x = (r * Math.cos(theta)) / 2 + 50; // Half because it goes left AND right
-				const y = (r * Math.sin(theta)) + 100; // Not half because it only goes up
-				const rotation = theta + Math.PI/2;
-				img.style.left = `${x}%`;
-				img.style.top = `${y}%`;
-				img.style.transform = `rotate(${rotation}rad)`
-				imgWrapper.appendChild(img);
+				const r = ((100 / this.metadata.depthCounts.length) * depth) + 10;
+				const theta = thetaStart + ((thetaEnd - thetaStart) / (leavesInRow - 1)) * idx;
+				const img = new LeafImg(r, theta, Math.PI / 2);
+				imgWrapper.appendChild(img.render());
+				const img2 = new LeafImg(r + 2, theta, Math.PI + Math.PI / 2);
+				imgWrapper.appendChild(img2.render());
 			});
+			// The "edge" leaves
+			if (depth != 0) {
+				// Left side
+				imgWrapper.appendChild(new LeafImg(
+					((100 / this.metadata.depthCounts.length) * depth),
+					thetaStart + config.edgeLeafOffset
+				).render());
+				// Right side
+				imgWrapper.appendChild(new LeafImg(
+					((100 / this.metadata.depthCounts.length) * depth),
+					thetaEnd - config.edgeLeafOffset
+				).render());
+			}
 		});
 		return imgWrapper;
 	}

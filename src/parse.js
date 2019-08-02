@@ -29,7 +29,7 @@ export default function (csvString) {
 
     // Calculate metadata, nodeIDs, and remove the temp _included field
     let nodeId = 0;
-    const metadata = { depthCounts: [1] }
+    const metadata = { depthCounts: [1], depthMinThetas:[undefined] }
     const prevSiblings = []; // This does not require same parent 
     const handleChildren = (children, depth = 0) => {
         depth++;

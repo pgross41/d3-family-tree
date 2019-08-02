@@ -1,36 +1,29 @@
 .treeNode {
     position: absolute;
-    width: 200px;
-    margin-left: -100px;
+    width: 300px;
+    margin-left: -150px;
     text-align: center;
     white-space: nowrap;
     height: 50px;
+    border-top: 35px solid transparent;
+    border-bottom: 35px solid transparent;
 }
 
-.name {
-    font-family: 'Dancing Script', cursive;
-    font-weight: 700;
-    font-size: 1.2em;
+.treeNode:first-child:not(.noBorderTop),
+.treeNode:first-child:last-child:not(.noBorderTop)  {
+    border-image-slice: 124 0 0 0;
+    border-image-repeat: round none none none;
 }
 
-.date {
-    font-family: 'Shadows Into Light', cursive;
+.treeNode:last-child:not(.noBorderBottom),
+.treeNode:first-child:last-child:not(.noBorderBottom)  {
+    border-image-slice: 0 0 124 0;
+    border-image-repeat: none none round none;
 }
 
-.depth2 .member,
-.depth2 .spouse{
-    display: inline-block;
-}
-
-.treeNode { 
-    /* border: 1px dashed #f0f; */
-    padding: 5px;
-}
-
-.treeNode:first-child,
-.treeNode:last-child {
-    border-image-slice: 124;
-    border-image-repeat: round;
+.treeNode:first-child:last-child:not(.noBorderTop):not(.noBorderBottom) {
+    border-image-slice: 124 0 124 0;
+    border-image-repeat: round none round none;
 }
 
 .variety1 {
@@ -45,26 +38,37 @@
     border-image: url(../images/leaves3.png);
 }
 
-.treeNode:first-child {
-    border-top: 35px solid transparent;
+:global(.debugMode) .treeNode { 
+    border: 1px dashed #f0f !important;
+    border-image: none !important;
 }
 
-.treeNode:last-child{
-    border-bottom: 35px solid transparent;
+.name {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: 1.2em;
+}
+
+.date {
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.member,
+.spouse{
+    display: inline-block;
 }
 
 .left > div{
     transform: rotate(180deg);
 }
 
-
 .rootNode {
     left: 50%;
-    bottom: -100px;
+    bottom: -40px;
     border: none !important;
     width: 250px;
     margin-left: -125px;
-    font-size: 1.5em;
+    font-size: 1.7em;
 }
 
 .rootNode .member {

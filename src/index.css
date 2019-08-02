@@ -1,6 +1,13 @@
 .body {
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     color: #111111;
-	margin: 0 auto 50px auto;
-	font-size: 14px;
+    font-size: 14px;
+    position: absolute;
+    width: 2000px;
+    height: 1000px;
+    margin-top: 500px;
+}
+
+:global(.debugMode) img {
+    border: 1px dashed #f0f !important;
 }
