@@ -6,7 +6,7 @@
     position: absolute;
     font-family: helvetica, sans-serif;
     background-image: url(/images/tree2.png);
-    background-size: 275px;
+    background-size: 300px;
     background-repeat: no-repeat;
     background-position: center 75%;
     margin: auto;
@@ -17,10 +17,4 @@
     top:0;
     bottom: 100px;
     width: 100%;
-}
-
-.leafImg {
-    width: 250px;
-    margin-left: -125px;
-    position: absolute; 
 }

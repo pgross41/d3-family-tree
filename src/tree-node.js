@@ -7,31 +7,36 @@ class TreeNode {
 		this.el = document.createElement('div');
 		this.familyMember = familyMember;
 		this.metadata = metadata;
+		if(familyMember.parentName){
+			this.calculations = this.calculate();
+		}
 	}
 
 	render() {
 		this.el.id = `node${this.familyMember.nodeId}`;
-		const calculations = this.calculate();
-		this.familyMember.calculations = calculations;
-		const depthClass = styles[`depth${this.familyMember.depth}`] || '';
+		this.el.className = styles.treeNodeContainer;
+		this.familyMember.calculations = this.calculations;
+		this.el.innerHTML = this.getNodeHtml(this.familyMember, this.getNodeClassName());
+		Object.assign(this.el.style, this.calculations.style);
+		return this.el;
+	}
+	
+	getNodeClassName(){
 		const varietyClass = styles[`variety${this.familyMember.generationId % 3 + 1}`] || '';
 		const noBorderSide = config.noBorders[this.familyMember.name]
 			|| (this.familyMember.generationId == 1 && "Top")
 			|| (this.familyMember.generationId == this.metadata.depthCounts[this.familyMember.depth] && "Bottom");
 		const noBorderClass = noBorderSide ? styles[`noBorder${noBorderSide}`] : '';
-		this.el.className = `${styles.treeNode} ${calculations.half} ${depthClass} ${varietyClass} ${noBorderClass}`;
-		this.el.innerHTML = this.getNodeHtml(this.familyMember);
-		Object.assign(this.el.style, calculations.style);
-		return this.el;
+		return `${styles.treeNode} ${this.calculations.half} ${varietyClass} ${noBorderClass}`.trim();
 	}
 
-	getNodeHtml(data) {
-		const name = data.name || '';
-		const date = data.born + (data.died ? ` - ${data.died}` : '');
-		const spouseName = data.spouseName || '';
-		const spouseBorn = data.spouseBorn || '';
+	getNodeHtml(data, className="") {
+		const name = (data.name || '&nbsp;') + (data.spouseName ? ' &plus;' : '');
+		const date = data.born + (data.died ? ` - ${data.died}` : '&nbsp;');
+		const spouseName = data.spouseName || '&nbsp;';
+		const spouseBorn = data.spouseBorn || '&nbsp;';
 		return `
-			<div>
+			<div class="${className}">
 				<div class="${styles.member}">
 					<div class="${styles.name}">${name}</div> 
 					${date && `<div class="${styles.date}">${date}</div>`}
@@ -63,7 +68,9 @@ class TreeNode {
 		const theta = theta1 + (config.adjustments[this.familyMember.name] || 0);
 		const x = (r * Math.cos(theta)) / 2 + 50; // Half because it goes left AND right
 		const y = (r * Math.sin(theta)) + 50; // Not half because it only goes up
-		console.log(this.el, x, y);
+		if(depth == 1){
+			console.log(this.el, x, y);
+		}
 		const isRightHalf = theta > (Math.PI + (Math.PI / 2));
 		if (this.familyMember.generationId == 1) {
 			this.metadata.depthMinThetas[depth] = theta;

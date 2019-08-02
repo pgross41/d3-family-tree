@@ -62,24 +62,26 @@ class Tree {
 			// const thetaEnd = Math.PI * 2 + (Math.PI - thetaStart);
 			const thetaEnd = Math.PI * 2 + (Math.PI - Math.min(...this.metadata.depthMinThetas.slice(1)));
 			[...Array(leavesInRow)].forEach((_, idx) => {
-				const r = ((100 / this.metadata.depthCounts.length) * depth) + 10;
+				const r = ((100 / this.metadata.depthCounts.length) * depth) + 12;
 				const theta = thetaStart + ((thetaEnd - thetaStart) / (leavesInRow - 1)) * idx;
 				const img = new LeafImg(r, theta, Math.PI / 2);
 				imgWrapper.appendChild(img.render());
-				const img2 = new LeafImg(r + 2, theta, Math.PI + Math.PI / 2);
+				const img2 = new LeafImg(r-1, theta, Math.PI + Math.PI / 2);
 				imgWrapper.appendChild(img2.render());
+				const img3 = new LeafImg(r+1, theta, Math.PI / 2);
+				imgWrapper.appendChild(img3.render());
 			});
 			// The "edge" leaves
 			if (depth != 0) {
 				// Left side
 				imgWrapper.appendChild(new LeafImg(
 					((100 / this.metadata.depthCounts.length) * depth),
-					thetaStart + config.edgeLeafOffset
+					thetaStart - config.edgeLeafOffset
 				).render());
 				// Right side
 				imgWrapper.appendChild(new LeafImg(
 					((100 / this.metadata.depthCounts.length) * depth),
-					thetaEnd - config.edgeLeafOffset
+					thetaEnd + config.edgeLeafOffset
 				).render());
 			}
 		});
